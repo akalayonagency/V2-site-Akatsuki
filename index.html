@@ -277,6 +277,456 @@ h3 {
   font-size: 1.06rem;
 }
 
+.overview-grid,
+.access-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.overview-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.access-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.compact-grid,
+.shop-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.team-grid {
+  grid-template-columns: 1fr;
+  margin-top: 28px;
+}
+
+.category-card,
+.access-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(145deg, rgba(22, 16, 15, 0.92), rgba(4, 4, 4, 0.94)),
+    var(--panel);
+  box-shadow: 0 16px 58px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    background 200ms ease;
+}
+
+.category-card:hover,
+.access-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 116, 54, 0.52);
+}
+
+.category-card {
+  min-height: 340px;
+  display: grid;
+  grid-template-rows: 148px 1fr;
+}
+
+.access-card {
+  min-height: 390px;
+  display: grid;
+  grid-template-rows: 188px 1fr;
+}
+
+.access-card.is-featured {
+  grid-column: span 2;
+  grid-template-columns: minmax(260px, 0.82fr) 1fr;
+  grid-template-rows: 1fr;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  min-height: 148px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: 1px solid rgba(255, 223, 197, 0.12);
+  filter: saturate(1.06) contrast(1.05);
+}
+
+.category-card .card-image {
+  min-height: 148px;
+}
+
+.access-card .card-image {
+  min-height: 188px;
+}
+
+.access-card.is-featured .card-image {
+  min-height: 100%;
+  border-right: 1px solid rgba(255, 223, 197, 0.12);
+  border-bottom: 0;
+}
+
+.visual-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 148px;
+  background:
+    radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--accent, #e42118), transparent 20%), transparent 9rem),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 38%),
+    linear-gradient(145deg, rgba(228, 33, 24, 0.16), rgba(3, 3, 3, 0.88));
+  border-bottom: 1px solid rgba(255, 223, 197, 0.12);
+}
+
+.access-card.is-featured .visual-scene {
+  min-height: 100%;
+  border-right: 1px solid rgba(255, 223, 197, 0.12);
+  border-bottom: 0;
+}
+
+.visual-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at center, #000, transparent 76%);
+}
+
+.scene-glow,
+.scene-shape,
+.scene-mark {
+  position: absolute;
+  display: block;
+}
+
+.scene-glow {
+  inset: auto -24% -46% -24%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent, #e42118), transparent 22%), transparent 64%);
+  filter: blur(16px);
+}
+
+.scene-mark {
+  right: 20px;
+  bottom: 16px;
+  color: rgba(255, 247, 239, 0.94);
+  font-size: clamp(1.55rem, 4vw, 3.3rem);
+  font-weight: 950;
+  line-height: 0.9;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent, #e42118), transparent 18%);
+}
+
+.card-copy {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.category-card .card-kicker,
+.access-card .card-kicker {
+  width: fit-content;
+  margin-bottom: 14px;
+}
+
+.category-card h3,
+.access-card h3 {
+  max-width: 14ch;
+}
+
+.category-card p,
+.access-card p {
+  color: #ead2c0;
+}
+
+.category-card .card-link-label,
+.access-card .card-link-label {
+  margin-top: auto;
+}
+
+.visual-creator,
+.visual-calculator {
+  --accent: #e42118;
+}
+
+.visual-minecraft,
+.visual-tnt,
+.visual-tower {
+  --accent: #ff7436;
+}
+
+.visual-team,
+.visual-agent,
+.visual-manager,
+.visual-teamcalc {
+  --accent: #e9b66b;
+}
+
+.visual-shop,
+.visual-banner,
+.visual-overlay,
+.visual-poster,
+.visual-calendar {
+  --accent: #66f4ff;
+}
+
+.visual-creator .one,
+.visual-calculator .one {
+  left: 26px;
+  top: 28px;
+  width: 112px;
+  height: 112px;
+  border: 12px solid rgba(255, 247, 239, 0.14);
+  border-top-color: var(--accent);
+  border-right-color: var(--ember);
+  border-radius: 50%;
+  transform: rotate(28deg);
+}
+
+.visual-creator .two,
+.visual-calculator .two,
+.visual-teamcalc .two {
+  left: 152px;
+  bottom: 30px;
+  width: 150px;
+  height: 72px;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 18%, transparent 19% 24%, rgba(255, 255, 255, 0.24) 25% 46%, transparent 47% 52%, rgba(255, 255, 255, 0.34) 53% 82%, transparent 83%),
+    linear-gradient(180deg, transparent 62%, rgba(255, 116, 54, 0.38) 63%);
+}
+
+.visual-creator .three,
+.visual-calculator .three {
+  left: 78px;
+  bottom: 34px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold), var(--red-dark));
+  box-shadow: 0 0 22px rgba(233, 182, 107, 0.58);
+}
+
+.visual-poster .one {
+  left: 32px;
+  top: 24px;
+  width: 106px;
+  height: 136px;
+  border: 2px solid rgba(255, 247, 239, 0.28);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 28%),
+    linear-gradient(135deg, rgba(228, 33, 24, 0.75), rgba(4, 4, 4, 0.9));
+}
+
+.visual-poster .two {
+  left: 166px;
+  top: 58px;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(circle, rgba(255, 116, 54, 0.95), rgba(123, 11, 8, 0.88));
+}
+
+.visual-banner .one {
+  left: 28px;
+  right: 28px;
+  top: 42px;
+  height: 76px;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, rgba(102, 244, 255, 0.62), rgba(228, 33, 24, 0.68)),
+    rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 28px rgba(102, 244, 255, 0.26);
+}
+
+.visual-banner .two {
+  left: 52px;
+  top: 64px;
+  width: 44%;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(255, 247, 239, 0.68);
+}
+
+.visual-overlay .one {
+  inset: 30px 36px 48px;
+  border: 2px solid rgba(102, 244, 255, 0.58);
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 18px rgba(102, 244, 255, 0.04);
+}
+
+.visual-overlay .two {
+  right: 56px;
+  top: 50px;
+  width: 88px;
+  height: 26px;
+  border-radius: 99px;
+  background: rgba(228, 33, 24, 0.74);
+}
+
+.visual-overlay .three {
+  left: 58px;
+  bottom: 58px;
+  width: 112px;
+  height: 42px;
+  border-radius: 6px;
+  background: rgba(255, 247, 239, 0.16);
+}
+
+.visual-calendar .one {
+  left: 38px;
+  top: 28px;
+  width: 138px;
+  height: 126px;
+  border-radius: 8px;
+  background:
+    linear-gradient(var(--red) 0 22%, transparent 23%),
+    linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.08);
+  background-size: auto, 34px 30px, 34px 30px, auto;
+}
+
+.visual-calendar .two {
+  right: 48px;
+  bottom: 34px;
+  width: 72px;
+  height: 72px;
+  border: 7px solid rgba(233, 182, 107, 0.8);
+  border-radius: 50%;
+}
+
+.visual-tnt .one,
+.visual-minecraft .one {
+  left: 42px;
+  top: 42px;
+  width: 116px;
+  height: 92px;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 0 35%, rgba(255, 247, 239, 0.15) 36% 64%, transparent 65%),
+    linear-gradient(#a31811 0 48%, #fff7ef 49% 62%, #7b0b08 63%);
+  transform: skewY(-4deg);
+}
+
+.visual-tnt .two,
+.visual-minecraft .two {
+  right: 50px;
+  bottom: 36px;
+  width: 116px;
+  height: 54px;
+  background:
+    linear-gradient(90deg, rgba(45, 27, 13, 0.95) 25%, rgba(82, 53, 27, 0.9) 26% 50%, rgba(45, 27, 13, 0.95) 51% 75%, rgba(82, 53, 27, 0.9) 76%),
+    #432915;
+  border-radius: 4px;
+}
+
+.visual-tower .one {
+  left: 44px;
+  bottom: 36px;
+  width: 76px;
+  height: 108px;
+  background: linear-gradient(180deg, #4a2c18, #1b1009);
+  clip-path: polygon(0 28%, 18% 28%, 18% 0, 36% 0, 36% 28%, 62% 28%, 62% 0, 82% 0, 82% 28%, 100% 28%, 100% 100%, 0 100%);
+}
+
+.visual-tower .two {
+  right: 56px;
+  top: 50px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: conic-gradient(from 45deg, var(--ember), var(--red), #2b0907, var(--ember));
+}
+
+.visual-agent .one,
+.visual-team .one {
+  left: 38px;
+  top: 30px;
+  width: 122px;
+  height: 142px;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255, 247, 239, 0.78) 0 18px, transparent 19px),
+    linear-gradient(180deg, rgba(233, 182, 107, 0.25), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(233, 182, 107, 0.34);
+}
+
+.visual-agent .two,
+.visual-manager .two,
+.visual-team .two {
+  right: 36px;
+  top: 44px;
+  width: 138px;
+  height: 86px;
+  border-radius: 7px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.25) 0 8px, transparent 9px 22px, rgba(255, 255, 255, 0.2) 23px 31px, transparent 32px 47px, rgba(255, 255, 255, 0.18) 48px 56px, transparent 57px),
+    rgba(255, 255, 255, 0.08);
+}
+
+.visual-manager .one {
+  left: 34px;
+  bottom: 34px;
+  width: 170px;
+  height: 110px;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(228, 33, 24, 0.9) 18%, transparent 19% 26%, rgba(233, 182, 107, 0.9) 27% 52%, transparent 53% 60%, rgba(102, 244, 255, 0.8) 61% 86%, transparent 87%),
+    rgba(255, 255, 255, 0.07);
+  background-position: bottom;
+}
+
+.visual-teamcalc .one {
+  left: 42px;
+  top: 36px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gold) 0 68%, rgba(255, 255, 255, 0.12) 69%);
+  box-shadow: inset 0 0 0 18px rgba(5, 4, 4, 0.82);
+}
+
+.visual-shop .one {
+  left: 54px;
+  top: 56px;
+  width: 112px;
+  height: 88px;
+  border-radius: 12px 12px 8px 8px;
+  background: linear-gradient(135deg, rgba(228, 33, 24, 0.9), rgba(233, 182, 107, 0.82));
+}
+
+.visual-shop .one::before {
+  content: "";
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  top: -26px;
+  height: 42px;
+  border: 7px solid rgba(255, 247, 239, 0.72);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+
+.visual-shop .two {
+  right: 52px;
+  bottom: 42px;
+  width: 96px;
+  height: 124px;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 247, 239, 0.22), transparent 30%),
+    rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 247, 239, 0.18);
+}
+
 .role-grid,
 .feature-grid {
   display: grid;
@@ -655,9 +1105,24 @@ h3 {
 
   .role-grid,
   .feature-grid,
+  .overview-grid,
+  .access-grid,
   .split-section,
   .resource-list {
     grid-template-columns: 1fr;
+  }
+
+  .access-card.is-featured {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 188px 1fr;
+  }
+
+  .access-card.is-featured .visual-scene,
+  .access-card.is-featured .card-image {
+    min-height: 188px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 223, 197, 0.12);
   }
 
   .feature-card.is-large {
@@ -723,8 +1188,37 @@ h3 {
     min-height: 270px;
   }
 
+  .category-card,
+  .access-card {
+    min-height: 330px;
+  }
+
+  .category-card {
+    grid-template-rows: 136px 1fr;
+  }
+
+  .access-card,
+  .access-card.is-featured {
+    grid-template-rows: 158px 1fr;
+  }
+
+  .access-card.is-featured .visual-scene,
+  .access-card.is-featured .card-image,
+  .visual-scene {
+    min-height: 158px;
+  }
+
+  .card-copy {
+    padding: 18px;
+  }
+
   .card-kicker {
     margin-bottom: 66px;
+  }
+
+  .category-card .card-kicker,
+  .access-card .card-kicker {
+    margin-bottom: 12px;
   }
 
   .mini-grid {
@@ -768,51 +1262,62 @@ h3 {
         </div>
       </section>
 
-      <section class="section section-intro" id="roles" aria-labelledby="rolesTitle">
+      <section class="section section-intro" id="menu" aria-labelledby="menuTitle">
         <div class="section-heading">
-          <p class="eyebrow">Choisissez votre voie</p>
-          <h2 id="rolesTitle">Un portail clair pour chaque profil</h2>
+          <p class="eyebrow">Menu principal</p>
+          <h2 id="menuTitle">Tous les acces AkaTsuki en un seul endroit</h2>
           <p>
-            Chaque bloc peut pointer vers votre formulaire, dashboard, Discord,
-            calendrier ou document interne.
+            Les blocs ci-dessous reprennent tes entrees importantes : outils createur,
+            Minecraft, espace agent/manager et boutique officielle.
           </p>
         </div>
-        <div class="role-grid" id="roleGrid"></div>
+        <div class="overview-grid" id="overviewGrid"></div>
       </section>
 
-      <section class="section section-dark" id="hub" aria-labelledby="hubTitle">
+      <section class="section section-dark" id="creator-tools" aria-labelledby="creatorToolsTitle">
         <div class="section-heading">
-          <p class="eyebrow">Espace operationnel</p>
-          <h2 id="hubTitle">Les outils AkaTsuki a votre disposition</h2>
+          <p class="eyebrow">Outils createur</p>
+          <h2 id="creatorToolsTitle">Calculs, visuels et rendez-vous</h2>
           <p>
-            Regroupez les acces importants au meme endroit : calculs, rendez-vous,
-            formations, kits live et suivi manager.
+            Chaque carte est connectee directement a sa page Odoo et possede son propre
+            univers visuel pour eviter l'effet copie-colle.
           </p>
         </div>
-        <div class="feature-grid" id="featureGrid"></div>
+        <div class="access-grid creator-grid" id="creatorGrid"></div>
       </section>
 
-      <section class="split-section" id="method" aria-labelledby="methodTitle">
+      <section class="section" id="minecraft" aria-labelledby="minecraftTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Minecraft</p>
+          <h2 id="minecraftTitle">Les acces gaming de l'organisation</h2>
+          <p>
+            Les deux entrees Minecraft ressortent clairement avec une DA plus bloc,
+            lave et terrain de jeu.
+          </p>
+        </div>
+        <div class="access-grid compact-grid" id="minecraftGrid"></div>
+      </section>
+
+      <section class="split-section" id="team" aria-labelledby="teamTitle">
         <div class="split-copy">
-          <p class="eyebrow">Accompagnement</p>
-          <h2 id="methodTitle">Une organisation faite pour progresser vite</h2>
+          <p class="eyebrow">Espace Agent & Manager</p>
+          <h2 id="teamTitle">Roles et recompenses equipe</h2>
           <p>
-            L'agence structure votre parcours avec des objectifs simples,
-            des rendez-vous reguliers, des ressources prÃªtes a l'emploi et une
-            lecture claire de vos statistiques.
+            Les pages agent, manager et calculateur equipe sont separees pour que
+            chacun trouve son espace sans chercher dans un menu deroulant.
           </p>
-          <div class="steps" id="stepList"></div>
+          <div class="access-grid team-grid" id="teamGrid"></div>
         </div>
-        <div class="visual-panel" aria-label="Apercu du cockpit agence">
+        <div class="visual-panel" aria-label="Apercu du cockpit agent manager">
           <div class="panel-topline">
             <span></span>
             <span></span>
             <span></span>
           </div>
           <div class="signal-card">
-            <p>Score de progression</p>
-            <strong>87%</strong>
-            <span>Objectif hebdo en avance</span>
+            <p>Suivi equipe</p>
+            <strong>AM</strong>
+            <span>Agent / Manager connectes</span>
           </div>
           <div class="bar-list" aria-hidden="true">
             <span style="--size: 92%"></span>
@@ -829,25 +1334,25 @@ h3 {
         </div>
       </section>
 
-      <section class="section section-compact" id="resources" aria-labelledby="resourcesTitle">
+      <section class="section section-compact" id="shop" aria-labelledby="shopTitle">
         <div class="section-heading">
-          <p class="eyebrow">Ressources rapides</p>
-          <h2 id="resourcesTitle">Liens courts pour les actions du quotidien</h2>
+          <p class="eyebrow">Boutique Officiel</p>
+          <h2 id="shopTitle">Le shop AkaTsuki Organization</h2>
+          <p>Un bloc dedie a la boutique, visible et directement cliquable.</p>
         </div>
-        <div class="resource-list" id="resourceList"></div>
+        <div class="access-grid shop-grid" id="shopGrid"></div>
       </section>
 
       <section class="closing-section" id="contact" aria-labelledby="contactTitle">
         <div>
-          <p class="eyebrow">Rejoindre l'organisation</p>
-          <h2 id="contactTitle">Pret a entrer dans l'ombre rouge ?</h2>
+          <p class="eyebrow">Rendez-vous</p>
+          <h2 id="contactTitle">Besoin d'un passage agence ?</h2>
           <p>
-            Ajoutez ici votre lien de candidature, votre formulaire agent ou
-            votre canal manager. Le bloc entier reste cliquable.
+            Le bouton ouvre directement la page de prise de rendez-vous.
           </p>
         </div>
         <a class="closing-action" id="closingAction" href="#">
-          Candidater maintenant
+          Prendre rendez-vous
         </a>
       </section>
     </main>
@@ -855,126 +1360,171 @@ h3 {
     <script>
 // Modifiez les liens ici : chaque bloc utilise son href.
 const LINKS = {
-  creator: "#hub",
-  agent: "#method",
-  manager: "#method",
-  rewards: "#hub",
-  calendar: "#hub",
-  gaming: "#hub",
-  training: "#hub",
-  kit: "#hub",
-  support: "#contact",
-  onboarding: "#method",
-  analytics: "#method",
-  rules: "#resources",
-  contact: "#contact"
+  rewardCreator: "https://aka-tsuki-organization.odoo.com/calculateur-de-recompense-createur",
+  matchPoster: "https://aka-tsuki-organization.odoo.com/createur-d-affiche-de-match-officiel",
+  bannerCreator: "https://aka-tsuki-organization.odoo.com/createur-de-banniere",
+  overlayCreator: "https://aka-tsuki-organization.odoo.com/createur-d-overlay",
+  appointment: "https://aka-tsuki-organization.odoo.com/prise-de-rendez-vous",
+  minecraftTnt: "https://aka-tsuki-organization.odoo.com/minecraft-tnt",
+  minecraftTower: "https://aka-tsuki-organization.odoo.com/minecraft-tower-defense",
+  agentRole: "https://aka-tsuki-organization.odoo.com/le-role-de-l-agent",
+  managerRole: "https://aka-tsuki-organization.odoo.com/le-role-du-manager",
+  rewardTeam: "https://aka-tsuki-organization.odoo.com/calculateur-de-recompense-agentmanager",
+  shop: "https://aka-tsuki-organization.odoo.com/shop"
 };
 
 const heroActions = [
-  { label: "Entrer dans l'espace createur", href: LINKS.creator, style: "primary" }
+  { label: "Ouvrir le calculateur createur", href: LINKS.rewardCreator, style: "primary" }
 ];
 
-const roles = [
+const overviewCards = [
   {
-    kicker: "Createurs LIVE",
-    title: "Developpez vos lives avec un cadre pro",
-    text: "Acces aux recompenses, formations, objectifs et ressources pour performer sans perdre le fil.",
-    href: LINKS.creator,
-    position: "44% 36%"
+    kicker: "Menu createur",
+    title: "Outils Createur",
+    text: "Calculateur, affiche de match, banniere, overlay et rendez-vous.",
+    href: "#creator-tools",
+    image: "reward-creator.png",
+    visual: "creator",
+    mark: "LIVE"
   },
   {
-    kicker: "Agents",
-    title: "Suivez vos talents et vos passages",
-    text: "Centralisez les rendez-vous, les validations et les actions importantes pour votre portefeuille.",
-    href: LINKS.agent,
-    position: "58% 48%"
+    kicker: "Minecraft",
+    title: "Pole Gaming",
+    text: "Acces directs aux pages Minecraft TNT et Tower Defense.",
+    href: "#minecraft",
+    image: "minecraft-tnt.png",
+    visual: "minecraft",
+    mark: "TNT"
   },
   {
-    kicker: "Managers",
-    title: "Pilotez l'activite avec une vision claire",
-    text: "Gardez une lecture simple des priorites, stats, ressources et besoins de chaque equipe.",
-    href: LINKS.manager,
-    position: "72% 44%"
+    kicker: "Espace equipe",
+    title: "Agents & Managers",
+    text: "Roles, accompagnement et calculateur de recompense equipe.",
+    href: "#team",
+    image: "agent-role.png",
+    visual: "team",
+    mark: "AM"
+  },
+  {
+    kicker: "Boutique",
+    title: "Boutique Officiel",
+    text: "Acces direct au shop AkaTsuki Organization.",
+    href: LINKS.shop,
+    image: "shop.png",
+    visual: "shop",
+    mark: "SHOP"
   }
 ];
 
-const features = [
+const creatorTools = [
   {
     kicker: "Calcul",
-    title: "Calculateur de recompense mensuel",
-    text: "Transformez vos statistiques en estimation claire pour anticiper vos objectifs.",
-    href: LINKS.rewards,
-    size: "large",
-    position: "48% 42%"
+    title: "Calculateur de Recompense Createur",
+    text: "Estimez vos recompenses createur a partir de vos statistiques LIVE.",
+    href: LINKS.rewardCreator,
+    image: "reward-creator.png",
+    visual: "calculator",
+    mark: "87%",
+    featured: true
+  },
+  {
+    kicker: "Match officiel",
+    title: "Createur d'affiche de Match Officiel",
+    text: "Generez une affiche propre pour annoncer vos matchs et evenements.",
+    href: LINKS.matchPoster,
+    image: "match-poster.png",
+    visual: "poster",
+    mark: "VS"
+  },
+  {
+    kicker: "Identite",
+    title: "Createur de Banniere",
+    text: "Preparez une banniere coherente avec la DA AkaTsuki.",
+    href: LINKS.bannerCreator,
+    image: "banner-maker.png",
+    visual: "banner",
+    mark: "BANNER"
+  },
+  {
+    kicker: "Stream",
+    title: "Createur d'overlay",
+    text: "Creez un overlay clair pour vos lives, alertes et scenes.",
+    href: LINKS.overlayCreator,
+    image: "overlay-maker.png",
+    visual: "overlay",
+    mark: "LIVE"
   },
   {
     kicker: "Planning",
-    title: "Calendrier d'attribution",
-    text: "Reservez vos passages et gardez une trace des dates importantes.",
-    href: LINKS.calendar,
-    position: "60% 34%"
-  },
-  {
-    kicker: "Gaming",
-    title: "Pole gaming et events",
-    text: "Retrouvez les serveurs, installations, consignes et annonces speciales.",
-    href: LINKS.gaming,
-    position: "32% 58%"
-  },
-  {
-    kicker: "Formation",
-    title: "Academie createur",
-    text: "Scripts, bonnes pratiques LIVE, setup, moderation et progression.",
-    href: LINKS.training,
-    position: "66% 50%"
-  },
-  {
-    kicker: "Kit LIVE",
-    title: "Overlay, affiches et assets",
-    text: "Recuperez les elements visuels pour lancer un live propre et coherent.",
-    href: LINKS.kit,
-    position: "50% 65%"
+    title: "Prise de rendez-vous",
+    text: "Bloquez un creneau avec l'agence pour votre suivi ou vos validations.",
+    href: LINKS.appointment,
+    image: "appointment.png",
+    visual: "calendar",
+    mark: "RDV"
   }
 ];
 
-const steps = [
+const minecraftTools = [
   {
-    title: "Diagnostic",
-    text: "Objectifs, frequence de live, forces et points a travailler.",
-    href: LINKS.onboarding
+    kicker: "Minecraft",
+    title: "Minecraft TNT",
+    text: "Accedez aux consignes et installations du serveur Minecraft TNT.",
+    href: LINKS.minecraftTnt,
+    image: "minecraft-tnt.png",
+    visual: "tnt",
+    mark: "TNT"
   },
   {
-    title: "Plan d'action",
-    text: "Priorites simples, calendrier clair et ressources adaptees.",
-    href: LINKS.calendar
-  },
-  {
-    title: "Suivi",
-    text: "Lecture des stats, ajustements et accompagnement manager.",
-    href: LINKS.analytics
+    kicker: "Minecraft",
+    title: "Minecraft Tower Defense",
+    text: "Retrouvez la page Tower Defense et les informations utiles.",
+    href: LINKS.minecraftTower,
+    image: "minecraft-tower.png",
+    visual: "tower",
+    mark: "TD"
   }
 ];
 
-const resources = [
+const teamTools = [
   {
-    title: "Support manager",
-    text: "Ouvrir un ticket ou contacter l'equipe pour une demande urgente.",
-    href: LINKS.support
+    kicker: "Agent",
+    title: "Le role de l'agent",
+    text: "Comprendre les missions, le suivi et les responsabilites de l'agent.",
+    href: LINKS.agentRole,
+    image: "agent-role.png",
+    visual: "agent",
+    mark: "AG"
   },
   {
-    title: "Reglement et conditions",
-    text: "Retrouver les regles de l'agence, les criteres et les documents utiles.",
-    href: LINKS.rules
+    kicker: "Manager",
+    title: "Le role du manager",
+    text: "Clarifier la vision, les priorites et le pilotage manager.",
+    href: LINKS.managerRole,
+    image: "manager-role.png",
+    visual: "manager",
+    mark: "MG"
   },
   {
-    title: "Analytics createur",
-    text: "Consulter les indicateurs de progression et les objectifs en cours.",
-    href: LINKS.analytics
-  },
+    kicker: "Calcul",
+    title: "Calculateur Agent / Manager",
+    text: "Calculez les recompenses cote agent et manager.",
+    href: LINKS.rewardTeam,
+    image: "reward-team.png",
+    visual: "teamcalc",
+    mark: "%"
+  }
+];
+
+const shopTools = [
   {
-    title: "Onboarding agent",
-    text: "Acceder au parcours d'integration et aux ressources de demarrage.",
-    href: LINKS.onboarding
+    kicker: "Shop",
+    title: "Boutique Officiel",
+    text: "Ouvrez la boutique AkaTsuki Organization.",
+    href: LINKS.shop,
+    image: "shop.png",
+    visual: "shop",
+    mark: "SHOP"
   }
 ];
 
@@ -1001,80 +1551,36 @@ function renderHeroActions() {
   });
 }
 
-function renderRoles() {
-  const target = byId("roleGrid");
-  roles.forEach((role) => {
-    const card = createAnchor("role-card", role.href, role.title);
-    card.style.setProperty("--card-position", role.position);
-    card.innerHTML = `
-      <span class="card-kicker">${role.kicker}</span>
-      <h3>${role.title}</h3>
-      <p>${role.text}</p>
-      <span class="card-link-label">Ouvrir l'espace</span>
-    `;
-    target.appendChild(card);
-  });
+function cardTemplate(item, label) {
+  return `
+    <img class="card-image" src="${item.image}" alt="" loading="lazy" />
+    <span class="card-copy">
+      <span class="card-kicker">${item.kicker}</span>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+      <span class="card-link-label">${label}</span>
+    </span>
+  `;
 }
 
-function renderFeatures() {
-  const target = byId("featureGrid");
-  features.forEach((feature) => {
+function renderCards(targetId, items, className, label = "Ouvrir") {
+  const target = byId(targetId);
+  items.forEach((item) => {
     const card = createAnchor(
-      `feature-card${feature.size === "large" ? " is-large" : ""}`,
-      feature.href,
-      feature.title
+      `${className}${item.featured ? " is-featured" : ""}`,
+      item.href,
+      item.title
     );
-    card.style.setProperty("--card-position", feature.position);
-    card.innerHTML = `
-      <span class="card-kicker">${feature.kicker}</span>
-      <h3>${feature.title}</h3>
-      <p>${feature.text}</p>
-      <span class="card-link-label">Acceder</span>
-    `;
+    card.innerHTML = cardTemplate(item, label);
     target.appendChild(card);
-  });
-}
-
-function renderSteps() {
-  const target = byId("stepList");
-  steps.forEach((step, index) => {
-    const link = createAnchor("step-link", step.href, step.title);
-    link.innerHTML = `
-      <span class="step-number">${String(index + 1).padStart(2, "0")}</span>
-      <span>
-        <strong>${step.title}</strong>
-        <span>${step.text}</span>
-      </span>
-    `;
-    target.appendChild(link);
-  });
-}
-
-function renderResources() {
-  const target = byId("resourceList");
-  resources.forEach((resource) => {
-    const link = createAnchor("resource-item", resource.href, resource.title);
-    link.innerHTML = `
-      <span>
-        <strong>${resource.title}</strong>
-        <span>${resource.text}</span>
-      </span>
-      <span class="resource-arrow">Ouvrir</span>
-    `;
-    target.appendChild(link);
   });
 }
 
 function setupClosingLink() {
   const closingAction = byId("closingAction");
-  closingAction.href = LINKS.contact;
-  if (LINKS.contact.startsWith("http")) {
-    closingAction.target = "_blank";
-    closingAction.rel = "noreferrer";
-  } else {
-    closingAction.removeAttribute("target");
-    closingAction.removeAttribute("rel");
-  }
+  closingAction.href = LINKS.appointment;
+  closingAction.target = "_blank";
+  closingAction.rel = "noreferrer";
 }
 
 function setupEmbers() {
@@ -1131,10 +1637,11 @@ function setupEmbers() {
 }
 
 renderHeroActions();
-renderRoles();
-renderFeatures();
-renderSteps();
-renderResources();
+renderCards("overviewGrid", overviewCards, "category-card", "Voir la categorie");
+renderCards("creatorGrid", creatorTools, "access-card");
+renderCards("minecraftGrid", minecraftTools, "access-card");
+renderCards("teamGrid", teamTools, "access-card");
+renderCards("shopGrid", shopTools, "access-card");
 setupClosingLink();
 setupEmbers();
 
