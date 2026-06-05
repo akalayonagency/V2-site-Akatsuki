@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      if (new URLSearchParams(window.location.search).get("embed") === "team") {
+        document.documentElement.classList.add("akatsuki-embed-html");
+      }
+    </script>
     <title>AkaTsuki Organization | Agence TikTok LIVE</title>
     <meta
       name="description"
@@ -1126,42 +1131,132 @@ h3 {
     animation-duration: 0.001ms !important;
   }
 }
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
+
+/* =========================================================
+   MODE ODOO / IFRAME RESPONSIVE
+   URL à utiliser dans Odoo :
+   https://akalayonagency.github.io/V2-site-Akatsuki/?embed=team
+   ========================================================= */
+
+html.akatsuki-embed-html,
+html.akatsuki-embed-html body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #030303 !important;
 }
 
-body {
-  margin: 0;
+html.akatsuki-embed-html body {
+  min-width: 320px !important;
 }
 
-main {
-  width: 100%;
-  overflow: hidden;
+html.akatsuki-embed-html body::before {
+  display: block !important;
+  z-index: 0 !important;
 }
 
-#team {
-  min-height: 100dvh;
-  scroll-margin-top: 0;
+html.akatsuki-embed-html .ember-canvas {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  opacity: 0.85 !important;
+}
+
+html.akatsuki-embed-html main {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+html.akatsuki-embed-html main > section {
+  display: none !important;
+}
+
+html.akatsuki-embed-html main > #team {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-top: 72px !important;
+  padding-bottom: 90px !important;
+  padding-inline: max(20px, calc((100vw - var(--max)) / 2)) !important;
+  background:
+    linear-gradient(180deg, rgba(3, 3, 3, 0.15), rgba(112, 10, 8, 0.08), rgba(3, 3, 3, 0.14)),
+    radial-gradient(circle at 88% 10%, rgba(255, 116, 54, 0.12), transparent 22rem) !important;
+  border-block: 0 !important;
+  overflow: hidden !important;
+}
+
+html.akatsuki-embed-html #team .split-copy {
+  width: 100% !important;
+  max-width: var(--max) !important;
+  margin: 0 auto !important;
+}
+
+html.akatsuki-embed-html #team .team-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 28px !important;
+}
+
+html.akatsuki-embed-html #team .access-card {
+  min-height: 390px !important;
+}
+
+html.akatsuki-embed-html #team .card-kicker {
+  margin-bottom: 14px !important;
 }
 
 @media (max-width: 1024px) {
-  #team {
-    min-height: 100svh;
+  html.akatsuki-embed-html main > #team {
+    padding-top: 64px !important;
+    padding-bottom: 84px !important;
+    padding-inline: 20px !important;
+  }
+
+  html.akatsuki-embed-html #team .team-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  html.akatsuki-embed-html #team .access-card {
+    min-height: 360px !important;
   }
 }
 
 @media (max-width: 600px) {
-  #team {
-    min-height: auto;
+  html.akatsuki-embed-html main > #team {
+    padding-top: 52px !important;
+    padding-bottom: 72px !important;
+    padding-inline: 16px !important;
   }
 
-  .team-grid {
+  html.akatsuki-embed-html #team h2 {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    line-height: 0.95 !important;
+  }
+
+  html.akatsuki-embed-html #team .team-grid {
     grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  html.akatsuki-embed-html #team .access-card {
+    min-height: 330px !important;
+  }
+
+  html.akatsuki-embed-html #team .card-copy {
+    padding: 18px !important;
   }
 }
+
     </style>
   </head>
   <body>
@@ -1491,6 +1586,79 @@ setupClosingLink();
 setupEmbers();
 
     </script>
+
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const isTeamEmbed = params.get("embed") === "team";
+
+  if (!isTeamEmbed) return;
+
+  document.documentElement.classList.add("akatsuki-embed-html");
+  document.body.classList.add("akatsuki-embed-team");
+
+  const teamSection = document.getElementById("team");
+
+  function getTeamHeight() {
+    if (!teamSection) {
+      return Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+    }
+
+    const rect = teamSection.getBoundingClientRect();
+    return Math.ceil(rect.height);
+  }
+
+  function sendHeightToParent() {
+    window.requestAnimationFrame(function () {
+      const height = getTeamHeight();
+
+      window.parent.postMessage(
+        {
+          type: "AKATSUKI_IFRAME_HEIGHT",
+          height: Math.max(500, height + 4)
+        },
+        "*"
+      );
+    });
+  }
+
+  window.addEventListener("load", sendHeightToParent);
+  window.addEventListener("resize", sendHeightToParent);
+  window.addEventListener("orientationchange", function () {
+    setTimeout(sendHeightToParent, 300);
+  });
+
+  if ("ResizeObserver" in window && teamSection) {
+    const resizeObserver = new ResizeObserver(sendHeightToParent);
+    resizeObserver.observe(teamSection);
+  }
+
+  if ("MutationObserver" in window) {
+    const mutationObserver = new MutationObserver(sendHeightToParent);
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true
+    });
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(sendHeightToParent);
+  }
+
+  setTimeout(sendHeightToParent, 50);
+  setTimeout(sendHeightToParent, 250);
+  setTimeout(sendHeightToParent, 750);
+  setTimeout(sendHeightToParent, 1500);
+  setTimeout(sendHeightToParent, 2500);
+})();
+</script>
+
   </body>
 </html>
 
