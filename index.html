@@ -1126,7 +1126,42 @@ h3 {
     animation-duration: 0.001ms !important;
   }
 }
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
+body {
+  margin: 0;
+}
+
+main {
+  width: 100%;
+  overflow: hidden;
+}
+
+#team {
+  min-height: 100dvh;
+  scroll-margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+  #team {
+    min-height: 100svh;
+  }
+}
+
+@media (max-width: 600px) {
+  #team {
+    min-height: auto;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
     </style>
   </head>
   <body>
