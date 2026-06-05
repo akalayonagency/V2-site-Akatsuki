@@ -1136,6 +1136,8 @@ html.akatsuki-odoo-html,
 html.akatsuki-odoo-html body {
   width: 100% !important;
   max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow-x: hidden !important;
@@ -1143,7 +1145,7 @@ html.akatsuki-odoo-html body {
 }
 
 body.akatsuki-odoo-full {
-  min-width: 320px !important;
+  min-width: 0 !important;
   background:
     radial-gradient(circle at 50% -12%, rgba(197, 28, 20, 0.28), transparent 34rem),
     linear-gradient(180deg, #050202 0%, var(--bg) 48%, #080303 100%) !important;
@@ -1161,7 +1163,8 @@ body.akatsuki-odoo-full main {
   position: relative !important;
   z-index: 1 !important;
   width: 100% !important;
-  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
 }
 
 /* En iframe Odoo, le hero ne doit pas devenir géant sur écran large */
@@ -1565,44 +1568,95 @@ function setupOdooFullMode() {
   document.documentElement.classList.add("akatsuki-odoo-html");
   document.body.classList.add("akatsuki-odoo-full");
 
-  const sendHeight = () => {
+  let lastHeight = 0;
+  let frameId = 0;
+
+  const getMeasuredHeight = () => {
     const main = document.querySelector("main");
-    const height = Math.max(
+    const candidates = [
       main ? main.scrollHeight : 0,
       document.body.scrollHeight,
       document.documentElement.scrollHeight,
       document.body.offsetHeight,
-      document.documentElement.offsetHeight
-    );
+      document.documentElement.offsetHeight,
+      window.innerHeight
+    ];
+
+    [main, document.body, document.documentElement].forEach((element) => {
+      if (!element) return;
+      const rect = element.getBoundingClientRect();
+      candidates.push(rect.top + rect.height);
+    });
+
+    return Math.ceil(Math.max(...candidates) + 16);
+  };
+
+  const sendHeight = () => {
+    const height = getMeasuredHeight();
+    if (Math.abs(height - lastHeight) < 2) return;
+    lastHeight = height;
 
     window.parent.postMessage(
       {
         type: "AKATSUKI_FULL_IFRAME_HEIGHT",
-        height: Math.ceil(height + 8)
+        height
       },
       "*"
     );
   };
 
-  window.addEventListener("load", sendHeight);
-  window.addEventListener("resize", sendHeight);
+  const scheduleHeight = () => {
+    window.cancelAnimationFrame(frameId);
+    frameId = window.requestAnimationFrame(sendHeight);
+  };
+
+  window.addEventListener("load", scheduleHeight);
+  window.addEventListener("resize", scheduleHeight);
+  window.addEventListener("orientationchange", scheduleHeight);
+  window.addEventListener("pageshow", scheduleHeight);
+  window.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "AKATSUKI_PARENT_READY") {
+      scheduleHeight();
+    }
+  });
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", scheduleHeight);
+    window.visualViewport.addEventListener("scroll", scheduleHeight);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(scheduleHeight).catch(() => {});
+  }
 
   if ("ResizeObserver" in window) {
-    const observer = new ResizeObserver(sendHeight);
+    const observer = new ResizeObserver(scheduleHeight);
+    observer.observe(document.documentElement);
     observer.observe(document.body);
     const main = document.querySelector("main");
     if (main) observer.observe(main);
   }
 
+  if ("MutationObserver" in window) {
+    const mutationObserver = new MutationObserver(scheduleHeight);
+    mutationObserver.observe(document.body, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+  }
+
   document.querySelectorAll("img").forEach((img) => {
-    img.addEventListener("load", sendHeight, { once: true });
-    img.addEventListener("error", sendHeight, { once: true });
+    img.addEventListener("load", scheduleHeight, { once: true });
+    img.addEventListener("error", scheduleHeight, { once: true });
   });
 
-  setTimeout(sendHeight, 80);
-  setTimeout(sendHeight, 300);
-  setTimeout(sendHeight, 900);
-  setTimeout(sendHeight, 1800);
+  scheduleHeight();
+  setTimeout(scheduleHeight, 80);
+  setTimeout(scheduleHeight, 300);
+  setTimeout(scheduleHeight, 900);
+  setTimeout(scheduleHeight, 1800);
+  setTimeout(scheduleHeight, 3000);
 }
 
 renderHeroActions();
@@ -1617,4 +1671,3 @@ setupOdooFullMode();
     </script>
   </body>
 </html>
-
