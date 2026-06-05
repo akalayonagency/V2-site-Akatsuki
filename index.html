@@ -3,11 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-      if (new URLSearchParams(window.location.search).get("embed") === "team") {
-        document.documentElement.classList.add("akatsuki-embed-html");
-      }
-    </script>
     <title>AkaTsuki Organization | Agence TikTok LIVE</title>
     <meta
       name="description"
@@ -1132,131 +1127,6 @@ h3 {
   }
 }
 
-/* =========================================================
-   MODE ODOO / IFRAME RESPONSIVE
-   URL à utiliser dans Odoo :
-   https://akalayonagency.github.io/V2-site-Akatsuki/?embed=team
-   ========================================================= */
-
-html.akatsuki-embed-html,
-html.akatsuki-embed-html body {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  background: #030303 !important;
-}
-
-html.akatsuki-embed-html body {
-  min-width: 320px !important;
-}
-
-html.akatsuki-embed-html body::before {
-  display: block !important;
-  z-index: 0 !important;
-}
-
-html.akatsuki-embed-html .ember-canvas {
-  display: block !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 3 !important;
-  pointer-events: none !important;
-  opacity: 0.85 !important;
-}
-
-html.akatsuki-embed-html main {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
-
-html.akatsuki-embed-html main > section {
-  display: none !important;
-}
-
-html.akatsuki-embed-html main > #team {
-  display: block !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding-top: 72px !important;
-  padding-bottom: 90px !important;
-  padding-inline: max(20px, calc((100vw - var(--max)) / 2)) !important;
-  background:
-    linear-gradient(180deg, rgba(3, 3, 3, 0.15), rgba(112, 10, 8, 0.08), rgba(3, 3, 3, 0.14)),
-    radial-gradient(circle at 88% 10%, rgba(255, 116, 54, 0.12), transparent 22rem) !important;
-  border-block: 0 !important;
-  overflow: hidden !important;
-}
-
-html.akatsuki-embed-html #team .split-copy {
-  width: 100% !important;
-  max-width: var(--max) !important;
-  margin: 0 auto !important;
-}
-
-html.akatsuki-embed-html #team .team-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 16px !important;
-  margin-top: 28px !important;
-}
-
-html.akatsuki-embed-html #team .access-card {
-  min-height: 390px !important;
-}
-
-html.akatsuki-embed-html #team .card-kicker {
-  margin-bottom: 14px !important;
-}
-
-@media (max-width: 1024px) {
-  html.akatsuki-embed-html main > #team {
-    padding-top: 64px !important;
-    padding-bottom: 84px !important;
-    padding-inline: 20px !important;
-  }
-
-  html.akatsuki-embed-html #team .team-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  html.akatsuki-embed-html #team .access-card {
-    min-height: 360px !important;
-  }
-}
-
-@media (max-width: 600px) {
-  html.akatsuki-embed-html main > #team {
-    padding-top: 52px !important;
-    padding-bottom: 72px !important;
-    padding-inline: 16px !important;
-  }
-
-  html.akatsuki-embed-html #team h2 {
-    font-size: clamp(2rem, 10vw, 3rem) !important;
-    line-height: 0.95 !important;
-  }
-
-  html.akatsuki-embed-html #team .team-grid {
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-  }
-
-  html.akatsuki-embed-html #team .access-card {
-    min-height: 330px !important;
-  }
-
-  html.akatsuki-embed-html #team .card-copy {
-    padding: 18px !important;
-  }
-}
-
     </style>
   </head>
   <body>
@@ -1587,75 +1457,107 @@ setupEmbers();
 
     </script>
 
+<!-- MODE ODOO FULL PAGE : garde toute la page visible et ajuste automatiquement la hauteur de l'iframe -->
+<style>
+html.akatsuki-odoo-html,
+body.akatsuki-odoo-full {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+  background: #030303 !important;
+}
+
+/* On garde l'effet de fond / particules actif dans Odoo */
+body.akatsuki-odoo-full::before {
+  display: block !important;
+}
+
+body.akatsuki-odoo-full .ember-canvas {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+
+body.akatsuki-odoo-full main {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* En mode Odoo, on évite juste les petits décalages inutiles */
+body.akatsuki-odoo-full .section,
+body.akatsuki-odoo-full .split-section,
+body.akatsuki-odoo-full .closing-section {
+  max-width: var(--max);
+}
+
+/* Sécurité responsive */
+@media (max-width: 920px) {
+  body.akatsuki-odoo-full .access-grid,
+  body.akatsuki-odoo-full .team-grid,
+  body.akatsuki-odoo-full .compact-grid,
+  body.akatsuki-odoo-full .shop-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
 <script>
 (function () {
   const params = new URLSearchParams(window.location.search);
-  const isTeamEmbed = params.get("embed") === "team";
+  const isOdooFull = params.get("odoo") === "full";
 
-  if (!isTeamEmbed) return;
+  if (!isOdooFull) return;
 
-  document.documentElement.classList.add("akatsuki-embed-html");
-  document.body.classList.add("akatsuki-embed-team");
+  document.documentElement.classList.add("akatsuki-odoo-html");
+  document.body.classList.add("akatsuki-odoo-full");
 
-  const teamSection = document.getElementById("team");
+  function getFullPageHeight() {
+    const body = document.body;
+    const html = document.documentElement;
 
-  function getTeamHeight() {
-    if (!teamSection) {
-      return Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight
-      );
-    }
-
-    const rect = teamSection.getBoundingClientRect();
-    return Math.ceil(rect.height);
+    return Math.ceil(Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    ));
   }
 
-  function sendHeightToParent() {
-    window.requestAnimationFrame(function () {
-      const height = getTeamHeight();
-
-      window.parent.postMessage(
-        {
-          type: "AKATSUKI_IFRAME_HEIGHT",
-          height: Math.max(500, height + 4)
-        },
-        "*"
-      );
-    });
+  function sendHeightToOdoo() {
+    window.parent.postMessage(
+      {
+        type: "AKATSUKI_FULL_IFRAME_HEIGHT",
+        height: getFullPageHeight() + 30
+      },
+      "*"
+    );
   }
 
-  window.addEventListener("load", sendHeightToParent);
-  window.addEventListener("resize", sendHeightToParent);
-  window.addEventListener("orientationchange", function () {
-    setTimeout(sendHeightToParent, 300);
+  window.addEventListener("load", sendHeightToOdoo);
+  window.addEventListener("resize", sendHeightToOdoo);
+
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(sendHeightToOdoo);
+    observer.observe(document.body);
+    observer.observe(document.documentElement);
+  }
+
+  const mutationObserver = new MutationObserver(sendHeightToOdoo);
+  mutationObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true
   });
 
-  if ("ResizeObserver" in window && teamSection) {
-    const resizeObserver = new ResizeObserver(sendHeightToParent);
-    resizeObserver.observe(teamSection);
-  }
-
-  if ("MutationObserver" in window) {
-    const mutationObserver = new MutationObserver(sendHeightToParent);
-    mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true
-    });
-  }
-
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(sendHeightToParent);
-  }
-
-  setTimeout(sendHeightToParent, 50);
-  setTimeout(sendHeightToParent, 250);
-  setTimeout(sendHeightToParent, 750);
-  setTimeout(sendHeightToParent, 1500);
-  setTimeout(sendHeightToParent, 2500);
+  setTimeout(sendHeightToOdoo, 100);
+  setTimeout(sendHeightToOdoo, 500);
+  setTimeout(sendHeightToOdoo, 1200);
+  setTimeout(sendHeightToOdoo, 2500);
 })();
 </script>
 
