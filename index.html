@@ -1265,7 +1265,10 @@ body.akatsuki-odoo-full .closing-section {
         <div class="section-heading">
           <p class="eyebrow">Outils createur</p>
           <h2 id="creatorToolsTitle">Calculs, visuels et rendez-vous</h2>
-         
+          <p>
+            Chaque carte est connectee directement a sa page Odoo et possede son propre
+            univers visuel pour eviter l'effet copie-colle.
+          </p>
         </div>
         <div class="access-grid creator-grid" id="creatorGrid"></div>
       </section>
@@ -1570,16 +1573,9 @@ function setupOdooFullMode() {
 
   const getMeasuredHeight = () => {
     const main = document.querySelector("main");
-    const candidates = [
-      main ? main.scrollHeight : 0,
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.offsetHeight,
-      window.innerHeight
-    ];
+    const candidates = [];
 
-    [main, document.body, document.documentElement].forEach((element) => {
+    [main, document.body].forEach((element) => {
       if (!element) return;
       const rect = element.getBoundingClientRect();
       candidates.push(rect.top + rect.height);
