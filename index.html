@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AkaTsuki Organization | Agence TikTok LIVE</title>
+    <meta
+      name="description"
+      content="AkaTsuki Organization accompagne les createurs TikTok LIVE, agents et managers avec des outils, formations et rendez-vous operationnels."
+    />
+    <link rel="preload" href="assets/akatsuki-hero.png" as="image" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas class="ember-canvas" id="emberCanvas" aria-hidden="true"></canvas>
+
+    <main>
+      <section class="hero-section" aria-labelledby="heroTitle">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+          <p class="eyebrow">Agence TikTok LIVE pour createurs, agents et managers</p>
+          <h1 id="heroTitle"><span>AkaTsuki</span><span>Organization</span></h1>
+          <p class="hero-copy">
+            Un espace premium pour piloter vos lives, vos recompenses, vos formations
+            et votre progression avec une equipe qui suit vos objectifs de pres.
+          </p>
+          <div class="hero-actions" id="heroActions"></div>
+        </div>
+      </section>
+
+      <section class="section section-intro" id="roles" aria-labelledby="rolesTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Choisissez votre voie</p>
+          <h2 id="rolesTitle">Un portail clair pour chaque profil</h2>
+          <p>
+            Chaque bloc peut pointer vers votre formulaire, dashboard, Discord,
+            calendrier ou document interne.
+          </p>
+        </div>
+        <div class="role-grid" id="roleGrid"></div>
+      </section>
+
+      <section class="section section-dark" id="hub" aria-labelledby="hubTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Espace operationnel</p>
+          <h2 id="hubTitle">Les outils AkaTsuki a votre disposition</h2>
+          <p>
+            Regroupez les acces importants au meme endroit : calculs, rendez-vous,
+            formations, kits live et suivi manager.
+          </p>
+        </div>
+        <div class="feature-grid" id="featureGrid"></div>
+      </section>
+
+      <section class="split-section" id="method" aria-labelledby="methodTitle">
+        <div class="split-copy">
+          <p class="eyebrow">Accompagnement</p>
+          <h2 id="methodTitle">Une organisation faite pour progresser vite</h2>
+          <p>
+            L'agence structure votre parcours avec des objectifs simples,
+            des rendez-vous reguliers, des ressources prêtes a l'emploi et une
+            lecture claire de vos statistiques.
+          </p>
+          <div class="steps" id="stepList"></div>
+        </div>
+        <div class="visual-panel" aria-label="Apercu du cockpit agence">
+          <div class="panel-topline">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="signal-card">
+            <p>Score de progression</p>
+            <strong>87%</strong>
+            <span>Objectif hebdo en avance</span>
+          </div>
+          <div class="bar-list" aria-hidden="true">
+            <span style="--size: 92%"></span>
+            <span style="--size: 68%"></span>
+            <span style="--size: 76%"></span>
+            <span style="--size: 54%"></span>
+          </div>
+          <div class="mini-grid">
+            <span>Live</span>
+            <span>Coaching</span>
+            <span>Planning</span>
+            <span>Bonus</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-compact" id="resources" aria-labelledby="resourcesTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Ressources rapides</p>
+          <h2 id="resourcesTitle">Liens courts pour les actions du quotidien</h2>
+        </div>
+        <div class="resource-list" id="resourceList"></div>
+      </section>
+
+      <section class="closing-section" id="contact" aria-labelledby="contactTitle">
+        <div>
+          <p class="eyebrow">Rejoindre l'organisation</p>
+          <h2 id="contactTitle">Pret a entrer dans l'ombre rouge ?</h2>
+          <p>
+            Ajoutez ici votre lien de candidature, votre formulaire agent ou
+            votre canal manager. Le bloc entier reste cliquable.
+          </p>
+        </div>
+        <a class="closing-action" id="closingAction" href="#">
+          Candidater maintenant
+        </a>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
