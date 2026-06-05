@@ -1127,6 +1127,116 @@ h3 {
   }
 }
 
+
+/* ==========================================================
+   MODE ODOO FULL PAGE - iframe responsive auto
+   Utilisation : ?odoo=full
+   ========================================================== */
+html.akatsuki-odoo-html,
+html.akatsuki-odoo-html body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+  background: #030303 !important;
+}
+
+body.akatsuki-odoo-full {
+  min-width: 320px !important;
+  background:
+    radial-gradient(circle at 50% -12%, rgba(197, 28, 20, 0.28), transparent 34rem),
+    linear-gradient(180deg, #050202 0%, var(--bg) 48%, #080303 100%) !important;
+}
+
+body.akatsuki-odoo-full .ember-canvas {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+body.akatsuki-odoo-full main {
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* En iframe Odoo, le hero ne doit pas devenir géant sur écran large */
+body.akatsuki-odoo-full .hero-section {
+  min-height: min(720px, 86svh) !important;
+  align-items: center !important;
+  padding: clamp(72px, 8vw, 110px) clamp(22px, 5vw, 72px) clamp(42px, 5vw, 70px) !important;
+}
+
+body.akatsuki-odoo-full .hero-media {
+  background-size: cover !important;
+  background-position: 58% 34% !important;
+  transform: none !important;
+}
+
+body.akatsuki-odoo-full .hero-content {
+  max-width: 860px !important;
+}
+
+body.akatsuki-odoo-full h1 {
+  font-size: clamp(3.1rem, 5.6vw, 6rem) !important;
+  line-height: 0.88 !important;
+}
+
+body.akatsuki-odoo-full .hero-copy {
+  max-width: 620px !important;
+}
+
+body.akatsuki-odoo-full .section {
+  padding-top: clamp(60px, 7vw, 96px) !important;
+  padding-bottom: clamp(60px, 7vw, 96px) !important;
+}
+
+body.akatsuki-odoo-full .section-compact {
+  padding-top: clamp(50px, 6vw, 78px) !important;
+}
+
+body.akatsuki-odoo-full .closing-section {
+  margin-bottom: 48px !important;
+}
+
+/* TABLETTE */
+@media (max-width: 920px) {
+  body.akatsuki-odoo-full .hero-section {
+    min-height: 760px !important;
+    align-items: end !important;
+    padding-top: 92px !important;
+  }
+
+  body.akatsuki-odoo-full .hero-media {
+    background-position: 54% 26% !important;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  body.akatsuki-odoo-full .hero-section {
+    min-height: 690px !important;
+    padding: 86px 18px 42px !important;
+  }
+
+  body.akatsuki-odoo-full .hero-media {
+    background-position: 52% 18% !important;
+  }
+
+  body.akatsuki-odoo-full h1 {
+    font-size: clamp(2.35rem, 10.5vw, 2.9rem) !important;
+  }
+
+  body.akatsuki-odoo-full .section {
+    padding-top: 58px !important;
+    padding-bottom: 58px !important;
+  }
+}
+
     </style>
   </head>
   <body>
@@ -1447,6 +1557,54 @@ function setupEmbers() {
   window.addEventListener("resize", resize);
 }
 
+
+function setupOdooFullMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("odoo") !== "full") return;
+
+  document.documentElement.classList.add("akatsuki-odoo-html");
+  document.body.classList.add("akatsuki-odoo-full");
+
+  const sendHeight = () => {
+    const main = document.querySelector("main");
+    const height = Math.max(
+      main ? main.scrollHeight : 0,
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
+    );
+
+    window.parent.postMessage(
+      {
+        type: "AKATSUKI_FULL_IFRAME_HEIGHT",
+        height: Math.ceil(height + 8)
+      },
+      "*"
+    );
+  };
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(sendHeight);
+    observer.observe(document.body);
+    const main = document.querySelector("main");
+    if (main) observer.observe(main);
+  }
+
+  document.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("load", sendHeight, { once: true });
+    img.addEventListener("error", sendHeight, { once: true });
+  });
+
+  setTimeout(sendHeight, 80);
+  setTimeout(sendHeight, 300);
+  setTimeout(sendHeight, 900);
+  setTimeout(sendHeight, 1800);
+}
+
 renderHeroActions();
 renderCards("creatorGrid", creatorTools, "access-card");
 renderCards("minecraftGrid", minecraftTools, "access-card");
@@ -1454,113 +1612,9 @@ renderCards("teamGrid", teamTools, "access-card");
 renderCards("shopGrid", shopTools, "access-card");
 setupClosingLink();
 setupEmbers();
+setupOdooFullMode();
 
     </script>
-
-<!-- MODE ODOO FULL PAGE : garde toute la page visible et ajuste automatiquement la hauteur de l'iframe -->
-<style>
-html.akatsuki-odoo-html,
-body.akatsuki-odoo-full {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow-x: hidden !important;
-  background: #030303 !important;
-}
-
-/* On garde l'effet de fond / particules actif dans Odoo */
-body.akatsuki-odoo-full::before {
-  display: block !important;
-}
-
-body.akatsuki-odoo-full .ember-canvas {
-  display: block !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: -1 !important;
-  pointer-events: none !important;
-}
-
-body.akatsuki-odoo-full main {
-  width: 100% !important;
-  overflow: hidden !important;
-}
-
-/* En mode Odoo, on évite juste les petits décalages inutiles */
-body.akatsuki-odoo-full .section,
-body.akatsuki-odoo-full .split-section,
-body.akatsuki-odoo-full .closing-section {
-  max-width: var(--max);
-}
-
-/* Sécurité responsive */
-@media (max-width: 920px) {
-  body.akatsuki-odoo-full .access-grid,
-  body.akatsuki-odoo-full .team-grid,
-  body.akatsuki-odoo-full .compact-grid,
-  body.akatsuki-odoo-full .shop-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-</style>
-
-<script>
-(function () {
-  const params = new URLSearchParams(window.location.search);
-  const isOdooFull = params.get("odoo") === "full";
-
-  if (!isOdooFull) return;
-
-  document.documentElement.classList.add("akatsuki-odoo-html");
-  document.body.classList.add("akatsuki-odoo-full");
-
-  function getFullPageHeight() {
-    const body = document.body;
-    const html = document.documentElement;
-
-    return Math.ceil(Math.max(
-      body.scrollHeight,
-      body.offsetHeight,
-      html.clientHeight,
-      html.scrollHeight,
-      html.offsetHeight
-    ));
-  }
-
-  function sendHeightToOdoo() {
-    window.parent.postMessage(
-      {
-        type: "AKATSUKI_FULL_IFRAME_HEIGHT",
-        height: getFullPageHeight() + 30
-      },
-      "*"
-    );
-  }
-
-  window.addEventListener("load", sendHeightToOdoo);
-  window.addEventListener("resize", sendHeightToOdoo);
-
-  if ("ResizeObserver" in window) {
-    const observer = new ResizeObserver(sendHeightToOdoo);
-    observer.observe(document.body);
-    observer.observe(document.documentElement);
-  }
-
-  const mutationObserver = new MutationObserver(sendHeightToOdoo);
-  mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: true
-  });
-
-  setTimeout(sendHeightToOdoo, 100);
-  setTimeout(sendHeightToOdoo, 500);
-  setTimeout(sendHeightToOdoo, 1200);
-  setTimeout(sendHeightToOdoo, 2500);
-})();
-</script>
-
   </body>
 </html>
 
